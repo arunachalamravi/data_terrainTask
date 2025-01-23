@@ -14,7 +14,7 @@ export const modalStyle = {
       backgroundColor: '#fff',
       margin: '0px auto',
       boxShadow:'0px 0px 7px 2px #dbdbdb',
-      borderRadius:'8px',p:2
+      borderRadius:'8px',p:2,
     },
     secondaryButtonSx: {
       'textTransform': 'capitalize',
@@ -46,8 +46,8 @@ export const modalStyle = {
       },
     },
     titleSx: {
-      color: '#2c2c2c',
-      fontSize: '16px',
+      color: '#464646',
+      fontSize: '12px',
       fontWeight: '600',
       pb: 2,
       textAlign:'start',
@@ -63,11 +63,7 @@ export const modalStyle = {
       maxHeight: '74vh',
     },
     iconSx: {
-      width: '58px',
-      height: '57px',
-      borderRadius: '50px',
-      backgroundColor: '#e8e8e8',
-      p: '17px',
-      margin: '0px auto',
+      // border:'1px solid #dedede',
+  
     },
   };

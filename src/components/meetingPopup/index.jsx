@@ -8,6 +8,7 @@ import {
   IconButton,
   Button,
   Modal,
+  Avatar,
 } from "@mui/material";
 import { format, addHours } from "date-fns";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
@@ -70,6 +71,7 @@ export const MeetingPopup = ({
               justifyContent: "space-between",
               border: "1px solid #dddddd",
               px: 2,
+             
             }}
           >
             <Box
@@ -78,6 +80,7 @@ export const MeetingPopup = ({
                 pr: 2,
                 borderRight: "1px solid #dddddd",
                 mr: 2,
+              
               }}
             >
               <Typography fontWeight={400} sx={{ ...modalStyle?.titleSx }}>
@@ -103,30 +106,32 @@ export const MeetingPopup = ({
 
               <Stack spacing={1}>
                 <Button variant="outlined">
-                  <Typography>Resume.docx</Typography>
-                  <Box direction={"row"} alignItems={"center"} ml={2}>
-                    <VisibilityIcon />
-                    <FileDownloadOutlinedIcon sx={{ ml: 1 }} />
-                  </Box>
+                  <Typography sx={{fontSize:'12px',fontWeight:400}}>Resume.docx</Typography>
+                 
+                    <VisibilityIcon sx={{fontSize:'18px',ml:2}} />
+                    <FileDownloadOutlinedIcon sx={{ ml: 1,fontSize:'18px' }} />
+                 
                 </Button>
                 <Button variant="outlined">
-                  <Typography>Aadharcard</Typography>
-                  <Box direction={"row"} alignItems={"center"} ml={2}>
-                    <VisibilityIcon />
-                    <FileDownloadOutlinedIcon sx={{ ml: 1 }} />
-                  </Box>
+                  <Typography sx={{fontSize:'12px',fontWeight:400}}>Aadharcard</Typography>
+                    <VisibilityIcon sx={{fontSize:'18px',ml:2}}/>
+                    <FileDownloadOutlinedIcon sx={{ ml: 1,fontSize:'18px' }} />
                 </Button>
               </Stack>
             </Box>
-            <Box sx={{ width: "33%" }}>
+            <Box sx={{ width: "44%" }}>
               <Box
                 sx={{
                   ...modalStyle?.iconSx,
                 }}
               >
-                <AccountCircleIcon
-                  sx={{ fontSize: "60px", color: "rgb(77 77 77)" }}
-                />
+                 <Avatar src='/gmeet.png'
+                                                    sx={{ height: "100px", width: "120px", margin:'0px auto', borderRadius: "0px",
+
+      border:'1px solid #dedede',
+
+                                                     }}>
+                                                </Avatar>
               </Box>
 
               <Button

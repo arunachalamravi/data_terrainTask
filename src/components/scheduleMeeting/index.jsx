@@ -13,6 +13,7 @@ export const ScheduleMeeting = ({
   selectedEvent = {},
   handleCloseMeeting = () => false,
   handleClickMeeting = () => false,
+  mainSx,
 }) => {
   console.log(selectedEvent, "selectedEvent");
   return (
@@ -29,6 +30,7 @@ export const ScheduleMeeting = ({
           borderRadius: "8px",
           pb: "6px",
           cursor: "pointer",
+          ...mainSx
         }}
       >
         <Stack
@@ -38,11 +40,10 @@ export const ScheduleMeeting = ({
           py={"8px"}
           px={"6px"}
           sx={{
-            backgroundColor: "#fff",
-            borderRadius: "4px 4px 0px 0px",
+           ...weekStyle.overallMeeting
           }}
         >
-          <Typography sx={{ ...weekStyle?.contextText }}>Meetings</Typography>
+          <Typography sx={{ ...weekStyle?.contextText,fontWeight:600 }}>Meetings</Typography>
           <IconButton
             sx={{
               backgroundColor: "#1170C3",
@@ -77,13 +78,30 @@ export const ScheduleMeeting = ({
                       pb: 1,
                     }}
                   >
-                    <Box sx={{ px: 1, py: 1 }}>
+                    <Box sx={{ pr: 1, py: 1 }}>
+                    <Stack
+                                          direction={"row"}
+                                          alignItems={"center"}
+                                          justifyContent={"space-between"}
+                                        >
+                                          <Box
+                                            sx={{
+                                              backgroundColor: "#1170C3",
+                                              width: "12px",
+                                              height: "93px",
+                                              mr: 1,
+                                            }}
+                                          ></Box>
+                     
+               
+                      <Box>
                       <Stack
                         direction={"row"}
                         alignItems={"center"}
                         justifyContent={"space-between"}
+                        mb={1}
                       >
-                        <Typography sx={{ ...weekStyle?.contextText }}>
+                        <Typography sx={{ ...weekStyle?.contextText ,fontWeight:600 }}>
                           {e?.job_id?.jobRequest_Title}
                         </Typography>
                         <Stack
@@ -92,7 +110,7 @@ export const ScheduleMeeting = ({
                           spacing={"4px"}
                         >
                           <BorderColorOutlinedIcon
-                            sx={{ fontSize: "18px", color: "#dedede" }}
+                            sx={{ fontSize: "18px", color: "#000" }}
                           />
                           <DeleteOutlineRoundedIcon
                             sx={{ fontSize: "18px", color: "red" }}
@@ -103,11 +121,13 @@ export const ScheduleMeeting = ({
                         direction="row"
                         divider={<Divider orientation="vertical" flexItem />}
                         spacing={2}
+                        mb={1}
+
                       >
-                        <Typography sx={{ ...weekStyle?.contextText }}>
+                        <Typography sx={{ ...weekStyle?.contextText,fontWeight:500 }}>
                           {e?.desc}
                         </Typography>
-                        <Typography sx={{ ...weekStyle?.contextText }}>
+                        <Typography sx={{ ...weekStyle?.contextText,fontWeight:500 }}>
                           Interviewer: {e?.user_det?.handled_by?.firstName}
                         </Typography>
                       </Stack>
@@ -116,14 +136,17 @@ export const ScheduleMeeting = ({
                         divider={<Divider orientation="vertical" flexItem />}
                         spacing={2}
                       >
-                        <Typography sx={{ ...weekStyle?.contextText }}>
+                        <Typography sx={{ ...weekStyle?.contextText,fontWeight:500 }}>
                           Date: {format(e?.start, "dd MMM yyyy")}
                         </Typography>
-                        <Typography sx={{ ...weekStyle?.contextText }}>
+                        <Typography sx={{ ...weekStyle?.contextText ,fontWeight:500}}>
                           Time: {format(e?.start, "hh a")} -{" "}
                           {format(addHours(e?.end, 1), "hh a")}
                         </Typography>
                       </Stack>
+                      </Box>
+                      </Stack>
+
                     </Box>
                   </Stack>
                 </Box>
