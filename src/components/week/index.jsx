@@ -60,10 +60,8 @@ export const WeekCalendar = ({
     detailModalOpen();
   };
 
-  console.log(dates, "dates>>>>");
   console.log(hours, "hours");
 
-  console.log(groupedDataForDate, "groupedDataForDate");
 
   return (
     <>
@@ -157,7 +155,7 @@ export const WeekCalendar = ({
                                       <Box
                                         sx={{
                                           backgroundColor: "#fff",
-                                          padding: 1,
+                                          pr:1,
                                           boxShadow: "0px 0px 5px 2px #d5d5d5",
                                           borderRadius: "4px",
                                           cursor: "pointer",
@@ -177,7 +175,7 @@ export const WeekCalendar = ({
                                           <Box
                                             sx={{
                                               backgroundColor: "#1170C3",
-                                              width: "21px",
+                                              width: "12px",
                                               height: "93px",
                                               mr: 1,
                                             }}
@@ -187,7 +185,7 @@ export const WeekCalendar = ({
                                             <Stack spacing={"4px"}>
                                               <Typography
                                                 sx={{
-                                                  ...weekStyle?.contextText,
+                                                  ...weekStyle?.contextText,fontWeight:600
                                                 }}
                                               >
                                                 {
@@ -197,7 +195,7 @@ export const WeekCalendar = ({
                                               </Typography>
                                               <Typography
                                                 sx={{
-                                                  ...weekStyle?.contextText,
+                                                  ...weekStyle?.contextText,fontWeight:500
                                                 }}
                                               >
                                                 Interviewer:{" "}
@@ -209,7 +207,7 @@ export const WeekCalendar = ({
                                               </Typography>
                                               <Typography
                                                 sx={{
-                                                  ...weekStyle?.contextText,
+                                                  ...weekStyle?.contextText,fontWeight:500
                                                 }}
                                               >
                                                 Time:{" "}

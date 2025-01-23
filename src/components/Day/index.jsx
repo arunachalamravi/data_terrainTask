@@ -62,7 +62,6 @@ export const DayCalendar = ({
 
   console.log(weekdates, "weekdates");
 
-  console.log(groupedDataForDate, "groupedDataForDate");
 
   return (
     <>
@@ -130,7 +129,7 @@ export const DayCalendar = ({
                                   <Box
                                     sx={{
                                       backgroundColor: "#fff",
-                                      padding: 1,
+                                      pr:1,
                                       boxShadow: "0px 0px 5px 2px #d5d5d5",
                                       borderRadius: "4px",
                                       cursor: "pointer",
@@ -160,7 +159,7 @@ export const DayCalendar = ({
                                         <Stack spacing={"4px"}>
                                           <Typography
                                             sx={{
-                                              ...weekStyle?.contextText,
+                                              ...weekStyle?.contextText,fontWeight:600
                                             }}
                                           >
                                             {
@@ -170,7 +169,7 @@ export const DayCalendar = ({
                                           </Typography>
                                           <Typography
                                             sx={{
-                                              ...weekStyle?.contextText,
+                                              ...weekStyle?.contextText,fontWeight:400
                                             }}
                                           >
                                             Interviewer:{" "}
@@ -182,7 +181,7 @@ export const DayCalendar = ({
                                           </Typography>
                                           <Typography
                                             sx={{
-                                              ...weekStyle?.contextText,
+                                              ...weekStyle?.contextText,fontWeight:400
                                             }}
                                           >
                                             Time:{" "}

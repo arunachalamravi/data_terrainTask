@@ -4,7 +4,7 @@ export const  weekStyle ={
          
     },
     contextText:{
-        fontSize:'14px',
+        fontSize:'12px',
         color:'#000',
     
     },

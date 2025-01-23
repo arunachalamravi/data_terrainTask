@@ -1,7 +1,18 @@
 /* eslint-disable no-debugger */
 /* eslint-disable no-unused-vars */
 
-import { eachHourOfInterval, addDays, subDays, format } from "date-fns";
+import {
+  eachHourOfInterval,
+  addDays,
+  subDays,
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  subMonths,
+  addMonths,
+} from "date-fns";
 import React, { useEffect, useState } from "react";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -10,6 +21,7 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import { WeekCalendar } from "./components/week";
 import { MeetingPopup } from "./components/meetingPopup";
 import { DayCalendar } from "./components/Day";
+import { MonthCalendar } from "./components/month";
 
 function App() {
   const [dates, setDates] = useState([]);
@@ -25,6 +37,18 @@ function App() {
     startDate: new Date("2024-08-26"),
     endDate: addDays(new Date("2024-08-26"), 6),
   });
+
+  const [monthData, setMonthData] = React.useState({
+    monthstartDate: startOfWeek("2024-08-29"),
+    monthendDate: endOfWeek("2024-08-29"),
+    dates: [],
+    month: "2024-08-29",
+  });
+
+  const monthStart = startOfMonth(monthData?.month);
+  const monthEnd = endOfMonth(monthStart);
+  const monthstartDate = startOfWeek(monthStart);
+  const monthendDate = endOfWeek(monthEnd);
 
   const hours = eachHourOfInterval({
     start: new Date(2024, 10, 3, 0),
@@ -45,6 +69,7 @@ function App() {
       dateArray.push(new Date(date));
       date.setDate(date.getDate() + 1);
     }
+
     setDates(dateArray);
     return dateArray;
   };
@@ -109,16 +134,18 @@ function App() {
       let constructedData = [];
       if (type === "Week" || type === "Day") {
         constructedData = groupByStartTime(res);
+
+      } else {
+        constructedData = groupByDate(res);
       }
 
-      console.log(constructedData, "constructedData");
       setData(constructedData);
     } catch (error) {
       console.error("Error fetching the JSON file:", error);
     }
   };
 
-  const handleOpenDetailModal = async () => {
+  const HandleMeeting = async () => {
     try {
       const response = await fetch("/calendar_meeting.json");
 
@@ -176,15 +203,18 @@ function App() {
       weekNext();
     } else if (tabChange === "Day") {
       dayNext();
+    } else if (tabChange === "Month" || tabChange === "Year") {
+      monthNext();
     }
   };
 
   const onPrev = () => {
-    debugger;
     if (tabChange === "Week") {
       weekprev();
     } else if (tabChange === "Day") {
       dayprev();
+    } else if (tabChange === "Month" || tabChange === "Year") {
+      monthprev();
     }
   };
   const dayNext = () => {
@@ -207,10 +237,60 @@ function App() {
     getdateRange(start, end);
   };
 
+  const monthNext = () => {
+    let tempMonth = addMonths(monthData?.month, 1);
+    let monthStart = startOfMonth(tempMonth);
+    let monthEnd = endOfMonth(monthStart);
+    const monthDays = getdateRange(
+      startOfWeek(monthStart),
+      endOfWeek(monthEnd)
+    );
+
+    setMonthData({
+      ...monthData,
+      dates: monthDays,
+      month: format(new Date(tempMonth), "yyyy-MM-dd"),
+    });
+  };
+
+  const monthprev = () => {
+    let tempMonth = subMonths(monthData?.month, 1);
+    let monthStart = startOfMonth(tempMonth);
+    let monthEnd = endOfMonth(monthStart);
+
+    const monthDays = getdateRange(
+      startOfWeek(monthStart),
+      endOfWeek(monthEnd)
+    );
+
+    setMonthData({
+      ...monthData,
+      dates: monthDays,
+      month: format(tempMonth, "yyy-MM-dd"),
+    });
+  };
+  const dateRange = (startDate, endDate) => {
+    const date = new Date(startDate.getTime());
+
+    const dates = [];
+
+    while (date <= endDate) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+
+    return dates;
+  };
+
   useEffect(() => {
     setTabChange("Week");
     getData("Week");
     getdateRange(weekSchedule.startDate, weekSchedule.endDate);
+    let monthdays = dateRange(monthstartDate, monthendDate);
+    setMonthData({
+      ...monthData,
+      dates: monthdays,
+    });
   }, []);
 
   console.log(data, "data");
@@ -218,22 +298,13 @@ function App() {
   return (
     <>
       <div style={{ backgroundColor: "white" }}>
-        <Typography
-          sx={{
-            fontSize: "24px",
-            fontWeight: 700,
-            color: "#1170C3",
-            textAlign: "center",
-            mb: 3,
-          }}
-        >
-          Calender
-        </Typography>
+    <Box>
+    
         {/* Calender Header */}
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "end",
             justifyContent: "space-between",
           }}
         >
@@ -275,13 +346,25 @@ function App() {
                 },
               }}
             >
+              
               <Typography sx={{ color: "#fff" }}>
                 {format(new Date(), "dd")}
               </Typography>
             </IconButton>
           </Box>
           {/* Calender date */}
-          <Box sx={{ mb: 2 }}>
+          <Box sx={{ ml:2}}>
+          <Typography
+          sx={{
+            fontSize: "24px",
+            fontWeight: 700,
+            color: "#1170C3",
+            textAlign: "center",
+            mb: 3,
+          }}
+        >
+          Calender
+        </Typography>
             <Typography sx={{ fontSize: "24px", fontWeight: "500" }}>
               {tabChange === "Week" &&
                 `${format(weekSchedule?.startDate, "dd MMMM")} to ${format(
@@ -290,6 +373,10 @@ function App() {
                 )}, ${format(weekSchedule?.startDate, "yyyy")}`}
               {tabChange === "Day" &&
                 format(weekdates?.startDate, "dd MMMM yyyy")}
+                  {tabChange === "Month" &&
+                format(monthStart, "MMMM yyyy")}
+                {tabChange === "Year" &&
+                format(monthStart, "MMMM yyyy")}
             </Typography>
           </Box>
           {/* Tab*/}
@@ -329,6 +416,7 @@ function App() {
               })}
           </Box>
         </Box>
+    </Box>
         {/* Calender Section */}
         <Box sx={{ mt: 3 }}>
           {tabChange === "Week" && (
@@ -336,7 +424,7 @@ function App() {
               hours={hours}
               dates={dates}
               groupedDataForDate={data}
-              detailModalOpen={handleOpenDetailModal}
+              detailModalOpen={HandleMeeting}
             />
           )}
           {tabChange === "Day" && (
@@ -344,15 +432,30 @@ function App() {
               hours={hours}
               weekdates={weekdates}
               groupedDataForDate={data}
-              detailModalOpen={handleOpenDetailModal}
+              detailModalOpen={HandleMeeting}
             />
           )}
           {tabChange === "Month" && (
-            <Typography sx={{ fontSize: "20px" }}>Month Calender</Typography>
+            <Box sx={{ overflow: "auto" }}>
+              <MonthCalendar
+                dates={monthData?.dates}
+                month={monthData?.month}
+                data={data}
+                detailModalOpen={HandleMeeting}
+              />
+            </Box>
           )}
           {tabChange === "Year" && (
-            <Typography sx={{ fontSize: "20px" }}>Year Calender</Typography>
+            <Box sx={{ overflow: "auto" }}>
+              <MonthCalendar
+                dates={monthData?.dates}
+                month={monthData?.month}
+                data={data}
+                detailModalOpen={HandleMeeting}
+              />
+            </Box>
           )}
+          
         </Box>
       </div>
       {/* Meeting Popup */}
