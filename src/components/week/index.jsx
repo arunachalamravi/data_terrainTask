@@ -41,7 +41,7 @@ export const WeekCalendar = ({
   const handleSelectViewEvent = (index, data) => {
     setSelectedEvent({
       index,
-      data: data?.length > 1 ? data : [],
+      data: data?.length > 0 ? data:[]
     });
   };
 
@@ -247,7 +247,7 @@ export const WeekCalendar = ({
                                     </Box>
 
                                     {selectedEvent?.index === i &&
-                                      selectedEvent?.data?.length > 0 && (
+                                       (
                                         <ScheduleMeeting
                                           selectedEvent={selectedEvent}
                                           handleCloseMeeting={

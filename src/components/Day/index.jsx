@@ -41,7 +41,7 @@ export const DayCalendar = ({
   const handleSelectViewEvent = (index, data) => {
     setSelectedEvent({
       index,
-      data: data?.length > 1 ? data : [],
+      data: data?.length > 0 ?data : [],
     });
   };
 
