@@ -43,6 +43,9 @@ export const DayCalendar = ({
       index,
       data: data?.length > 0 ?data : [],
     });
+    if(data?.length ===1){
+      detailModalOpen();
+    }
   };
 
   const handleCloseMeeting = () => {
@@ -219,7 +222,7 @@ export const DayCalendar = ({
                                   </Box>
                                 </Box>
 
-                                {selectedEvent?.index === i && (
+                                {selectedEvent?.index === i && selectedEvent?.data?.length > 1 && (
                                   <ScheduleMeeting
                                     selectedEvent={selectedEvent}
                                     handleCloseMeeting={handleCloseMeeting}

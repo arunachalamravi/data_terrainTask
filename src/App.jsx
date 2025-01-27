@@ -146,6 +146,7 @@ function App() {
   };
 
   const HandleMeeting = async () => {
+    debugger
     try {
       const response = await fetch("/calendar_meeting.json");
 
