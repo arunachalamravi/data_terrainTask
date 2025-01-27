@@ -43,6 +43,9 @@ export const WeekCalendar = ({
       index,
       data: data?.length > 0 ? data:[]
     });
+    if(data?.length ===1){
+      detailModalOpen();
+    }
   };
 
   const handleCloseMeeting = () => {
@@ -246,7 +249,7 @@ export const WeekCalendar = ({
                                       </Box>
                                     </Box>
 
-                                    {selectedEvent?.index === i &&
+                                    {selectedEvent?.index === i && selectedEvent?.data?.length > 1 &&
                                        (
                                         <ScheduleMeeting
                                           selectedEvent={selectedEvent}
